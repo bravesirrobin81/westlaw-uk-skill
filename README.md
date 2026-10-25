@@ -32,9 +32,12 @@ session.
 Add this repo as a marketplace (SSH, the repo is private), then install the plugin:
 
 ```
-claude plugin marketplace add git@gitea.freshlybrewed.coffee:leigh/westlaw-uk-skill.git
+claude plugin marketplace add https://github.com/bravesirrobin81/westlaw-uk-skill
 claude plugin install westlaw-uk@freshlybrewed
 ```
+
+The canonical repo is on gitea (`git@gitea.freshlybrewed.coffee:leigh/westlaw-uk-skill.git`,
+access required); GitHub is a public mirror and works as a marketplace URL without auth.
 
 Or, for hacking on it, clone and run Claude Code with the directory loaded:
 
