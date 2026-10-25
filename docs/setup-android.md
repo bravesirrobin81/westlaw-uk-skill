@@ -43,6 +43,15 @@ you type prompts and read results on the phone.
    the Westlaw question as normal. The skill runs on the desktop and Chrome
    there does the browsing.
 
+## Second option: phone session linked to the desktop app's browser
+
+If the desktop runs the **Claude desktop app** rather than the CLI, a session
+started from the Claude Android app can be linked to that computer and use its
+built-in browser pane. The tools then carry the `mcp__remote-devices__Claude_Browser__`
+prefix and the skill handles that. Site approvals can be answered from the
+phone. The desktop app must be open and online. Same MFA caveat: the Dundee
+form is on the desktop pane, not the phone. See `setup-desktop-app.md`.
+
 ## The MFA problem
 
 When Westlaw's session expires, the skill stops and asks you to log in. The

@@ -12,17 +12,34 @@ Three rules sit above everything else:
 2. **Every search is counted against the University of Dundee's subscription.** Plan queries before running them. Default budget is 6 searches per task; tell the user when you are about to exceed it and let them raise it.
 3. **No bulk anything.** No paging past 3 result pages, no looping over document lists, no saving files unless the user asks for one specific document. See `docs/licence.md` at the plugin root.
 
-## 0. Preflight
+## 0. Preflight: pick a browser backend
 
-Load the Chrome tools in one call:
+Two backends work. Use whichever tools are present; never fall back to curl or WebFetch against Westlaw, that bypasses the user's session and the licence.
 
-```
-ToolSearch "select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__get_page_text,mcp__claude-in-chrome__find,mcp__claude-in-chrome__tabs_create_mcp,mcp__claude-in-chrome__tabs_close_mcp"
-```
+| Backend | Tool prefix | Where |
+|---------|-------------|-------|
+| Claude in Chrome (preferred, user's real Chrome profile) | `mcp__claude-in-chrome__` | Claude Code CLI with `--chrome`, or the desktop app connected to Chrome |
+| Built-in browser pane | `mcp__Claude_Browser__` (or `mcp__remote-devices__Claude_Browser__` from a cloud/phone session) | Claude desktop app (Cowork), no Chrome needed |
 
-If only `enable__mcp__claude-in-chrome` exists, call it first. If the extension is not connected, say so and point the user at `docs/setup-windows.md` or `docs/setup-macos.md`. Do not fall back to curl or WebFetch against Westlaw; that bypasses the user's session and the licence.
+Load tools in **one** ToolSearch call:
 
-Call `tabs_context_mcp`, then open a **new tab** with `tabs_create_mcp`. Work only in tabs you created.
+- Chrome: `select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__get_page_text,mcp__claude-in-chrome__find,mcp__claude-in-chrome__tabs_create_mcp,mcp__claude-in-chrome__tabs_close_mcp`
+- Built-in: query `mcp__Claude_Browser__` with `max_results: 64` (or the `remote-devices` prefix).
+
+If only an `enable__...` tool exists for either, call it first. If neither backend is available, say so and point the user at `docs/setup-desktop-app.md`, `docs/setup-windows.md` or `docs/setup-macos.md`.
+
+Tool name mapping (names after the prefix are otherwise the same):
+
+| Task | Chrome | Built-in |
+|------|--------|----------|
+| List tabs | `tabs_context_mcp` | `tabs_context` |
+| Open a new tab at a URL | `tabs_create_mcp` then `navigate` | `preview_start` with `url` (one call, returns `tabId`) |
+| Close tab | `tabs_close_mcp` | `tabs_close` |
+| Read text / structure | `get_page_text`, `read_page`, `find` | same |
+
+Call the tab-listing tool first, then open a **new tab** and work only in tabs you created.
+
+**Built-in browser only:** the pane may be hidden behind an artifact or closed. Before asking the user to do anything in it (sign in, approve MFA), call `tabs_context` and check the pane status it reports. If hidden, ask them to press Cmd+Shift+B (Mac) or Ctrl+Shift+B (Windows), or click the globe icon, then tell them what to do. The built-in browser keeps its own persistent profile, so a Dundee/Westlaw sign-in survives across sessions; treat it as the user's and never sign out.
 
 ## 1. Authenticate (Dundee WAYFless)
 
@@ -53,7 +70,7 @@ Then run it. Natural-language search works on Westlaw UK but terms-and-connector
 ## 3. Run searches and read results
 
 - Use the main search box on the home page, or the content-specific advanced search listed in `references/site-map.md`.
-- Use `find` and `read_page` with `filter: "interactive"` to locate controls; use `get_page_text` to read a results list or a document. Avoid screenshots unless layout matters.
+- Use `find` and `read_page` (interactive filter) to locate controls; use `get_page_text` to read a results list or a document. Avoid screenshots unless layout matters.
 - From a results list capture per hit: case name, neutral citation, "Where Reported", court, date, **case status indicator** (see below), and the document URL.
 - Open only the documents you will actually cite. Reading a document is cheaper than another search; do not re-search to re-find something you already have the URL for.
 - Do not click **Download**, **Print**, **Email** or **Add to folder** unless the user asked for that specific document.
@@ -84,7 +101,7 @@ Westlaw UK shows point-in-time versions. Record the **version date** shown and n
 
 ## 5. Teardown
 
-Close the tabs you created with `tabs_close_mcp`. **Do not sign out**; the user's session is theirs.
+Close the tabs you created (`tabs_close_mcp` / `tabs_close`). **Do not sign out**; the user's session is theirs.
 
 ## When to stop and ask
 

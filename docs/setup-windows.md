@@ -43,7 +43,7 @@ integration** even with `--chrome`.
 ## 3. Install the plugin
 
 ```powershell
-claude plugin marketplace add https://gitea.freshlybrewed.coffee/leigh/westlaw-uk-skill.git
+claude plugin marketplace add git@gitea.freshlybrewed.coffee:leigh/westlaw-uk-skill.git
 claude plugin install westlaw-uk@freshlybrewed
 ```
 

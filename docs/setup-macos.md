@@ -5,7 +5,7 @@ Same shape as Windows, fewer caveats.
 ```sh
 curl -fsSL https://claude.ai/install.sh | bash
 claude                 # /login with your Anthropic account, not an API key
-claude plugin marketplace add https://gitea.freshlybrewed.coffee/leigh/westlaw-uk-skill.git
+claude plugin marketplace add git@gitea.freshlybrewed.coffee:leigh/westlaw-uk-skill.git
 claude plugin install westlaw-uk@freshlybrewed
 claude --chrome
 ```

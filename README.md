@@ -21,17 +21,18 @@ session.
 | `skills/westlaw-uk/references/search-syntax.md` | Westlaw UK terms-and-connectors cheat sheet |
 | `skills/westlaw-uk/references/site-map.md` | Known entry points and page shapes (fill in as discovered) |
 | `skills/westlaw-uk/references/oscola.md` | OSCOLA citation output rules |
-| `docs/setup-windows.md` | Chrome + Claude Code on Windows |
+| `docs/setup-desktop-app.md` | Testing from the Claude desktop app (built-in browser, no Chrome needed) |
+| `docs/setup-windows.md` | Chrome + Claude Code CLI on Windows |
 | `docs/setup-android.md` | Driving it from an Android phone via Remote Control |
 | `docs/setup-macos.md` | macOS host notes |
 | `docs/licence.md` | Licence and metering constraints, read this once |
 
 ## Install
 
-Add this repo as a marketplace, then install the plugin:
+Add this repo as a marketplace (SSH, the repo is private), then install the plugin:
 
 ```
-claude plugin marketplace add https://gitea.freshlybrewed.coffee/leigh/westlaw-uk-skill.git
+claude plugin marketplace add git@gitea.freshlybrewed.coffee:leigh/westlaw-uk-skill.git
 claude plugin install westlaw-uk@freshlybrewed
 ```
 
@@ -55,7 +56,7 @@ something like:
 - Google Chrome with the *Claude in Chrome* extension (1.0.36 or newer) signed
   in to the same account.
 - A University of Dundee account with Westlaw UK entitlement.
-- Windows or macOS for the Chrome host. WSL is not officially supported.
+- Windows or macOS. Either Chrome with the extension, or the Claude desktop app's built-in browser. WSL is not supported for the CLI Chrome path.
   Android works only as a remote controller of a desktop session.
 
 ## Status
