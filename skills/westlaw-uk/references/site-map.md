@@ -127,3 +127,19 @@ Clicking a panel link scrolls within the same document; no new page, no search c
 - Citation field `co_search_advancedSearch_CI` accepts report citations ("2016 S.C. 367")
   as well as neutral ones and returned exactly 1 hit. Use it for lookups.
 - Data quirk seen: a 2003 case listed as citing a 2013 one. Sanity-check dates.
+
+## Form-driving lessons (2026-10-25, research run)
+
+- `form_input` works for the Free Text field. The Subject/Keyword combobox autocompletes:
+  `form_input` with "Scotland" became "church of scotland" and the Search click landed
+  on the suggestion. Type keywords by keyboard, press Escape, zoom to verify, then Search.
+- Resulting query syntax: `(<free text>) & SUJ,KW(Scotland)`. 18 hits for
+  `uninduced /s error & know!`; a good Scots-only scoping without the Jurisdiction facet.
+- There is no "Appellate History" panel even on an Inner House appeal (McSorley v Drennan
+  [2012] CSIH 59) when the lower decisions are unreported. Contents list then shows
+  Case Digest, Law Reports, Judgment, Case Analytics only.
+- A "Key Cases Citing" panel appears above "All Cases Citing" when a citing case has
+  substantive treatment. Label seen: "Not followed". Reading the status of a case
+  therefore means: status line, Key Cases Citing labels, All Cases Citing labels.
+- Clicking a citing-case heading ref did not navigate (page scrolled to top). Use the
+  citation link beside it, or go back to results and open from there.
