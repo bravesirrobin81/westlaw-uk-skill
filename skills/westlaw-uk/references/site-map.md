@@ -110,3 +110,20 @@ The global search box on Home has id `searchInputId` with a **Natural language**
 ## Changelog
 
 - 2026-10-25: confirmed live. Host, nav, results URL, result shape, document layout, field ids, Out of Plan marker, JS-output blocking.
+
+## Case Analysis panels (confirmed 2026-10-25)
+
+Left-hand contents on a case document: Case Analysis > Case Digest, Key Cases Cited,
+All Cases Citing, Journal Articles; Case Analytics > Precedent map, Treatment.
+Clicking a panel link scrolls within the same document; no new page, no search charge.
+
+- `get_page_text` returns only the digest block whatever panel is open. Read the other
+  panels with `find` (e.g. "treatment labels preceding each citing case") and `read_page`
+  on the returned refs.
+- All Cases Citing: each entry is preceded by a treatment label ("Mentioned by",
+  "Considered by", "Applied by", ...) then a heading link with case name, court,
+  citation, date, and that citing case's *own* status line. Do not confuse the two.
+- No "Appellate History" heading appears when the case was not appealed.
+- Citation field `co_search_advancedSearch_CI` accepts report citations ("2016 S.C. 367")
+  as well as neutral ones and returned exactly 1 hit. Use it for lookups.
+- Data quirk seen: a 2003 case listed as citing a 2013 one. Sanity-check dates.
