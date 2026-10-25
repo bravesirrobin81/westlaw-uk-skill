@@ -31,10 +31,11 @@ integration** even with `--chrome`.
    newer is needed for the Claude Code hookup.
 4. Click the extension, sign in with the **same** Anthropic account as Claude Code.
 5. In the extension settings, under site permissions, allow:
-   - `westlawuk.thomsonreuters.co.uk`
+   - `uk.westlaw.com` (the live host)
+   - `westlawuk.thomsonreuters.co.uk` (redirects to the above)
    - `signon.thomsonreuters.com`
    - `idp.dundee.ac.uk`
-   - `login.microsoftonline.com` (only if Dundee hands off to Entra for MFA)
+   - `login.microsoftonline.com` (Dundee's IdP is Microsoft Entra; this is where you sign in)
    - `libguides.dundee.ac.uk` (optional, only used to re-derive the WAYFless URL)
 
    You can instead leave it on "ask each time" and approve the prompts the

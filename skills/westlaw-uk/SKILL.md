@@ -1,6 +1,6 @@
 ---
 name: westlaw-uk
-description: Legal research on Westlaw UK (westlawuk.thomsonreuters.co.uk) through the user's own Chrome session, signed in via University of Dundee Shibboleth SSO. Use whenever the user mentions Westlaw, Westlaw UK, uk.westlaw.com, wants UK/Scots case law with status/treatment, journal articles, or Westlaw-style legislation annotations. Not for US law (that is the cocounsel-legal plugin) and not the first choice for plain statute text (use legislation.gov.uk).
+description: Legal research on Westlaw Edge UK (uk.westlaw.com) through the user's own Chrome session, signed in via University of Dundee Shibboleth SSO. Use whenever the user mentions Westlaw, Westlaw UK, uk.westlaw.com, wants UK/Scots case law with status/treatment, journal articles, or Westlaw-style legislation annotations. Not for US law (that is the cocounsel-legal plugin) and not the first choice for plain statute text (use legislation.gov.uk).
 ---
 
 # Westlaw UK research skill
@@ -43,12 +43,12 @@ Call the tab-listing tool first, then open a **new tab** and work only in tabs y
 
 ## 1. Authenticate (Dundee WAYFless)
 
-Navigate to the WAYFless URL in `references/auth-dundee.md`. Then read the page and classify where you landed:
+Navigate to the WAYFless URL in `references/auth-dundee.md`, **wait 5 to 8 seconds** (an existing Entra session completes the hop silently), then read the page and classify where you landed:
 
 | You see | Meaning | Action |
 |---------|---------|--------|
-| URL starts `westlawuk.thomsonreuters.co.uk/Browse/Home/WestlawUK` and page shows search box, Cases / Legislation / Journals tabs | Signed in | Continue |
-| URL on `idp.dundee.ac.uk` or `login.microsoftonline.com`, a username/password form | Needs login | **Stop.** Tell the user: "Please sign in to Dundee in the Chrome tab I just opened, complete MFA, then tell me when Westlaw has loaded." Wait for their reply, then re-read the page. |
+| URL host is `uk.westlaw.com`, title ends "Westlaw Edge UK", header has **Sign out** | Signed in | Continue |
+| URL on `login.microsoftonline.com` (Dundee's IdP is Entra) or `idp.dundee.ac.uk`, a username/password form | Needs login | **Stop.** Tell the user: "Please sign in to Dundee in the Chrome tab I just opened, complete MFA, then tell me when Westlaw has loaded." Wait for their reply, then re-read the page. |
 | `signon.thomsonreuters.com` page with "Access through academic institution" | WAYF did not pre-select | Click **Access through academic institution**, pick *University of Dundee*, then treat as "needs login". |
 | OnePass registration / "create account" | First-time linking | Stop and hand to user. Do not fill it in. |
 | "Session expired" or "signed in elsewhere" | Concurrent-session limit | Stop, explain, let the user choose which session to keep. |
@@ -70,8 +70,10 @@ Then run it. Natural-language search works on Westlaw UK but terms-and-connector
 ## 3. Run searches and read results
 
 - Use the main search box on the home page, or the content-specific advanced search listed in `references/site-map.md`.
-- Use `find` and `read_page` (interactive filter) to locate controls; use `get_page_text` to read a results list or a document. Avoid screenshots unless layout matters.
+- Use `find` and `read_page` (interactive filter) to locate controls; use `get_page_text` to read a results list or a document. Avoid screenshots unless layout matters. The extension blocks `javascript_tool` output containing query strings or GUIDs, so do not rely on JS scraping.
+- The content search forms (Cases, Legislation, Journals) have **no header search box**; use the form's Free Text field and the form's Search button. Field ids are in `references/site-map.md`.
 - From a results list capture per hit: case name, neutral citation, "Where Reported", court, date, **case status indicator** (see below), and the document URL.
+- **Never open a result marked "Out of Plan".** It is outside the Dundee subscription and may be chargeable. Report its citation and move on.
 - Open only the documents you will actually cite. Reading a document is cheaper than another search; do not re-search to re-find something you already have the URL for.
 - Do not click **Download**, **Print**, **Email** or **Add to folder** unless the user asked for that specific document.
 
@@ -81,10 +83,12 @@ Report the status flag as Westlaw shows it and say what it means:
 
 | Flag | Meaning |
 |------|---------|
-| Green tick | Positive or neutral judicial treatment |
-| Yellow triangle | Mixed or mildly negative treatment, or appeal pending |
-| Red stop | Negative treatment: overruled, reversed, not followed, or repealed/superseded (legislation) |
-| No flag | No treatment recorded |
+| "Positive/Neutral Judicial Treatment" (green) | Followed, applied, considered |
+| "Mixed or Mildly Negative Judicial Treatment" (yellow) | Distinguished, doubted, or appeal pending |
+| "Negative Judicial Treatment" (red) | Overruled, reversed, not followed; for legislation: repealed or superseded |
+| "No Substantial Judicial Treatment" | Nothing recorded; the most common state |
+
+On results pages the status is plain text under the citation line; on the document page it is the alt text of the status image. Quote the text as shown.
 
 Always open **Case Analysis** or the "Appellate History / Cases citing" panel before telling the user a case is good law. Never infer status from the flag colour alone when the question turns on it.
 

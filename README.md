@@ -1,7 +1,7 @@
 # westlaw-uk
 
-A Claude Code plugin that lets Claude do legal research on **Westlaw UK**
-(`westlawuk.thomsonreuters.co.uk`, formerly `uk.westlaw.com`) using your own
+A Claude Code plugin that lets Claude do legal research on **Westlaw Edge UK**
+(`uk.westlaw.com`) using your own
 browser session, signed in through the **University of Dundee** institutional
 login (UK Access Management Federation / Shibboleth).
 
@@ -61,6 +61,8 @@ something like:
 
 ## Status
 
-Scaffold. The auth flow and guardrails are written. Page selectors and exact
-search URL patterns in `site-map.md` are to be filled in after the first live
-sessions. See the repo issues for the plan.
+Live-tested 2026-10-25 from macOS with Claude Code CLI and Claude in Chrome:
+Dundee SSO hop, home navigation, advanced-search field ids, one metered Cases
+search, result list shape, and a case document. `site-map.md` reflects what
+was seen. Windows, the desktop app's built-in browser, and Android Remote
+Control are documented but not yet exercised. See the repo issues.

@@ -9,7 +9,7 @@
       "name": "westlaw-uk",
       "source": "./",
       "description": "Westlaw UK legal research through Claude in Chrome with Dundee institutional login.",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "category": "research"
     }
   ]

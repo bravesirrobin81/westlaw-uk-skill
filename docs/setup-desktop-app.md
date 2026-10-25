@@ -38,8 +38,8 @@ of these is needed on first test and update this doc.
 4. Claude opens the WAYFless URL in the pane and stops at the Dundee SSO page.
    If the pane is hidden, Claude will ask you to show it. Sign in there,
    approve MFA, link OnePass if asked, then say "done".
-5. Approve the site prompts for `westlawuk.thomsonreuters.co.uk`,
-   `signon.thomsonreuters.com` and `idp.dundee.ac.uk` when the app asks.
+5. Approve the site prompts for `uk.westlaw.com`, `signon.thomsonreuters.com`
+   and `login.microsoftonline.com` when the app asks.
 
 ## Testing on Windows
 

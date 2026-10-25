@@ -29,23 +29,32 @@ with redirects disabled and read the `Location` header to get the new one.
 ## Flow as seen in the browser
 
 1. WAYFless URL → `signon.thomsonreuters.com` issues a SAML AuthnRequest.
-2. Redirect to `idp.dundee.ac.uk` (Shibboleth). Dundee may in turn hand off to
-   Microsoft Entra (`login.microsoftonline.com`) with Authenticator MFA. Either
-   way this is where **the user types**. Claude does not.
+2. Redirect to Dundee's IdP, which **is Microsoft Entra**: the browser lands
+   directly on `login.microsoftonline.com/<tenant>/saml2` titled "Sign in to
+   your account" (confirmed 2026-10-25; no Shibboleth-branded page is shown).
+   Authenticator MFA follows. This is where **the user types**. Claude does not.
 3. SAML response back to `signon.thomsonreuters.com`.
 4. On a user's **first ever** visit Westlaw may ask to create or link a
    **OnePass** profile. Hand this to the user too.
-5. Redirect to `westlawuk.thomsonreuters.co.uk/Browse/Home/WestlawUK`. Session
-   cookies are set on that host. Signed in.
+5. Back on `signon.thomsonreuters.com/?comp=wluk&productid=PLCUK&viewproductid=UKWL&opentoken=...`
+   for a second or two, then redirect to
+   **`https://uk.westlaw.com/Browse/Home/WestlawUK?...&firstPage=true`**, page
+   title "Home | Westlaw Edge UK". Session cookies live on `uk.westlaw.com`. Signed in.
+   The Dundee entitlement showed Cases, Legislation, Journals, Current Awareness,
+   EU, Westlaw Books, Practical Law, Case Analytics, Legislation Compare.
 
 ## Detecting state cheaply
 
 After navigation, `get_page_text` the tab and look for:
 
-- Signed in: the page title contains "Westlaw UK", and a **Sign Out** link or
-  the user's name/institution appears in the header.
+- Signed in: URL host is `uk.westlaw.com`, title ends "| Westlaw Edge UK", and
+  a **Sign out** button is in the header.
 - Not signed in: a password field exists, or the URL host is
-  `idp.dundee.ac.uk`, `login.microsoftonline.com`, or `signon.thomsonreuters.com`.
+  `login.microsoftonline.com`, `idp.dundee.ac.uk`, or `signon.thomsonreuters.com`.
+- An already-authenticated Entra session makes the whole hop silent: on the
+  second visit of 2026-10-25 the WAYFless URL went straight through to Westlaw
+  in about 8 seconds with no prompt. Wait, then re-check, before declaring
+  "needs login".
 
 ## Session lifetime
 

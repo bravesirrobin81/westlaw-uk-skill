@@ -1,6 +1,6 @@
 {
   "name": "westlaw-uk",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Research skill for Westlaw UK (westlawuk.thomsonreuters.co.uk) via Claude in Chrome, authenticated through University of Dundee Shibboleth SSO.",
   "author": { "name": "Leigh Anderson", "email": "leigh@freshlybrewed.coffee" },
   "keywords": ["westlaw", "legal-research", "uk-law", "oscola", "dundee"]
