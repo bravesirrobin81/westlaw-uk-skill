@@ -1,0 +1,16 @@
+{
+  "name": "freshlybrewed",
+  "owner": { "name": "Leigh Anderson", "email": "leigh@freshlybrewed.coffee" },
+  "metadata": {
+    "description": "Leigh's personal Claude Code plugins, served from gitea.freshlybrewed.coffee"
+  },
+  "plugins": [
+    {
+      "name": "westlaw-uk",
+      "source": "./",
+      "description": "Westlaw UK legal research through Claude in Chrome with Dundee institutional login.",
+      "version": "0.1.0",
+      "category": "research"
+    }
+  ]
+}
