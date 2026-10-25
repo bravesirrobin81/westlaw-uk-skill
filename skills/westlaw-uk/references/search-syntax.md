@@ -52,3 +52,10 @@ series are good secondary filters.
 - Test query `unjust! /3 enrich! & Scotland` returned 1,735 cases, many English, because "Scotland" matches anywhere in the text. For Scots cases filter by **Court** (`CO` field: "Court of Session", "Sheriff") or use the Jurisdiction facet rather than a bare word.
 - Sort by relevance first; switch to date only when asked for latest authority.
 - Open documents by their URL from the results list rather than re-searching the citation.
+
+## Citation lookup (lesson, 2026-10-25)
+
+Typing a bare neutral citation such as `[2013] CSOH 26` into the home search box runs a
+free-text search (6,921 hits, target at rank 8). It works but is wasteful. Prefer the
+Cases advanced search citation field (`co_search_advancedSearch_CI`) or wrap the citation
+in quotes, so the target comes top and the status line is readable on hit 1.
