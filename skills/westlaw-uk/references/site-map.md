@@ -143,3 +143,24 @@ Clicking a panel link scrolls within the same document; no new page, no search c
   therefore means: status line, Key Cases Citing labels, All Cases Citing labels.
 - Clicking a citing-case heading ref did not navigate (page scrolled to top). Use the
   citation link beside it, or go back to results and open from there.
+
+## Legislation and Journals forms (confirmed 2026-10-25)
+
+Legislation (`/Browse/Home/WestlawUK/WLLegislation`):
+- The Title field is an autocomplete combobox and ate the last character of a typed
+  title (query became `TI(... Act 202)`, zero hits). Put title terms in Free Text as
+  `TI(word & word)` instead.
+- Status checkboxes: Law Today (default on), Historical Law, Prospective Law. A new Act
+  with uncommenced sections needs Prospective Law ticked or those sections are excluded.
+  Query suffix shows as `& JURIS(ANY) & ST(LF PL) & AD(Y)`.
+- Results are one row per provision: Act title, Part, heading, status ("Not Yet In
+  Force" / "Law In Force"), "Version in force from: <date> (version n of m)".
+- Provision page: status, "Version n of m", date range, then text, then Statutory
+  Annotations (Explanatory Notes, navigation/definitions notes, legislative-intention
+  notes from the Official Report). `get_page_text` returns all of it.
+- Heading-link ref clicks did not navigate on this results page; a coordinate click did.
+  Take a screenshot and click the link text when a ref click leaves the URL unchanged.
+
+Journals (`/Browse/Home/WestlawUK/Journals`): Free Text via `form_input` worked;
+results give title, journal, Availability (Abstract | Full Text), author, citation,
+subject, keywords. Full Text was available for Edinburgh Law Review.
